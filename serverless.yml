@@ -57,6 +57,17 @@ functions:
               paths:
                 id: true
 
+  update:
+    handler: src/handlers/updateNote/index.handler
+    events:
+      - http:
+          path: /toDo/{id}
+          method: patch
+          request:
+            parameters:
+              paths:
+                id: true
+
 resources:
   Resources:
     NotesTable:

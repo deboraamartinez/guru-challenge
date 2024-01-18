@@ -3,7 +3,8 @@ const {
   PutCommand,
   DynamoDBDocumentClient,
   DeleteCommand,
-  GetCommand
+  GetCommand,
+  UpdateCommand,
 } = require("@aws-sdk/lib-dynamodb");
 
 const client = new DynamoDBClient({});
@@ -55,16 +56,22 @@ class DynamoDBService {
     }
   }
 
-  async updateItem(id, data, table) {
+  async updateItem(data, id, table) {
     try {
-      const params = {
+      const command = new UpdateCommand({
         TableName: table,
-        Item: {
+        Key: {
           id: id,
-          content: data,
         },
-      };
-      await dynamoDB.update(params).promise();
+        UpdateExpression: "set content = :content, title = :title",
+        ExpressionAttributeValues: {
+          ":content": data.content,
+          ":title": data.title,
+        },
+        ReturnValues: "ALL_NEW",
+      });
+      const result = await docClient.send(command);
+      return result.Item;
     } catch (error) {
       throw error;
     }
