@@ -1,7 +1,7 @@
 
-org: deboraMartinez
+org: deboraamartinez
 app: challange-guru-5
-service: notes-app-api-node-aws
+service: notes-app-node-aws
 frameworkVersion: '3'
 
 provider:
@@ -10,22 +10,24 @@ provider:
   region: us-east-1
   httpApi:
     cors: true
-  
+  stage: 'dev'
+  environment:
+    NOTES_TABLE: dev-notes
 
 functions:
   create:
-    handler: handler.hello
+    handler: src/handlers/createNote/index.handler
     events:
       - http:
           path: /toDo
-          method: get
+          method: post
 
 resources:
   Resources:
     NotesTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:provider.stage}-notes
+        TableName: dev-notes
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
