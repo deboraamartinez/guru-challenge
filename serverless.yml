@@ -10,9 +10,12 @@ provider:
   region: us-east-1
   httpApi:
     cors: true
-  stage: 'dev'
+  stage: ${opt:stage, 'dev'}
+
+
   environment:
-    NOTES_TABLE: dev-notes
+    NOTES_TABLE: note-table-${self:provider.stage}
+
   iam:
     role:
       statements:
@@ -25,8 +28,14 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
+            - dynamodb:CreateTable
           Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
+custom:
+  stages:
+    - dev
+    - prod
+    
 functions:
   create:
     handler: src/handlers/createNote/index.handler
@@ -68,12 +77,23 @@ functions:
               paths:
                 id: true
 
+  readAll:
+    handler: src/handlers/readAllNotes/index.handler
+    events:
+      - http:
+          path: /toDo/all
+          method: get
+          request:
+            parameters:
+              paths:
+                id: true
+
 resources:
   Resources:
     NotesTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: dev-notes
+        TableName: ${self:provider.environment.NOTES_TABLE}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -81,7 +101,3 @@ resources:
           - AttributeName: id
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"

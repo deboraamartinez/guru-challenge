@@ -5,12 +5,14 @@ const {
   DeleteCommand,
   GetCommand,
   UpdateCommand,
+  ScanCommand,
 } = require("@aws-sdk/lib-dynamodb");
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 class DynamoDBService {
+
   async readItem(id, table) {
     try {
       const command = new GetCommand({
@@ -22,6 +24,19 @@ class DynamoDBService {
       const result = await docClient.send(command);
       return result.Item;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  async readAllItens(table) {
+    try {
+      const command = new ScanCommand({
+        TableName: table,
+      });
+      const result = await docClient.send(command);
+      return result.Items;
+    } catch (error) {
+      console.log(error)
       throw error;
     }
   }

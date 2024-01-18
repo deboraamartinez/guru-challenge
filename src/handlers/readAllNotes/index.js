@@ -1,10 +1,11 @@
 const dynamoDBService = require("../../../service/aws/dynamoDb");
 
 exports.handler = async (event) => {
-  const id = JSON.parse(event.pathParameters.id);
 
   try {
-    const data = await dynamoDBService.readItem(id, process.env.NOTES_TABLE);
+    const data = await dynamoDBService.readAllItens(
+      process.env.NOTES_TABLE
+    );
     return {
       statusCode: 200,
       body: JSON.stringify({ message: data }),
