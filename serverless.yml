@@ -13,6 +13,19 @@ provider:
   stage: 'dev'
   environment:
     NOTES_TABLE: dev-notes
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
 functions:
   create:
@@ -21,6 +34,17 @@ functions:
       - http:
           path: /toDo
           method: post
+  
+  delete:
+    handler: src/handlers/deleteNote/index.handler
+    events:
+      - http:
+          path: /toDo/{id}
+          method: delete
+          request:
+            parameters:
+              paths:
+                id: true
 
 resources:
   Resources:
