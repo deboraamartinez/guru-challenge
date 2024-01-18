@@ -46,6 +46,17 @@ functions:
               paths:
                 id: true
 
+  read:
+    handler: src/handlers/readNote/index.handler
+    events:
+      - http:
+          path: /toDo/{id}
+          method: get
+          request:
+            parameters:
+              paths:
+                id: true
+
 resources:
   Resources:
     NotesTable:

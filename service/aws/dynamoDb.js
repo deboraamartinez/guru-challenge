@@ -3,21 +3,22 @@ const {
   PutCommand,
   DynamoDBDocumentClient,
   DeleteCommand,
+  GetCommand
 } = require("@aws-sdk/lib-dynamodb");
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 class DynamoDBService {
-  async getItem(id, table) {
+  async readItem(id, table) {
     try {
-      const params = {
+      const command = new GetCommand({
         TableName: table,
-        Item: {
+        Key: {
           id: id,
         },
-      };
-      const result = await dynamoDB.get(params).promise();
+      });
+      const result = await docClient.send(command);
       return result.Item;
     } catch (error) {
       throw error;
@@ -34,10 +35,8 @@ class DynamoDBService {
           content: data.content,
         },
       });
-      const result = await docClient.send(command);
-      console.log(result);
+      await docClient.send(command);
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -50,10 +49,8 @@ class DynamoDBService {
           id: id,
         },
       });
-      const result = await docClient.send(command);
-      console.log(result);
+      return await docClient.send(command);
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
