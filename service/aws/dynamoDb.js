@@ -12,7 +12,6 @@ const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 class DynamoDBService {
-
   async readItem(id, table) {
     try {
       const command = new GetCommand({
@@ -36,7 +35,6 @@ class DynamoDBService {
       const result = await docClient.send(command);
       return result.Items;
     } catch (error) {
-      console.log(error)
       throw error;
     }
   }

@@ -11,7 +11,6 @@ exports.handler = async (event) => {
   const id = event.pathParameters.id;
 
   const { error } = noteSchema.validate(data);
-  
 
   if (error) {
     return {

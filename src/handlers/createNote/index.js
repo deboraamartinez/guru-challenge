@@ -23,7 +23,7 @@ exports.handler = async (event) => {
       id: uuidv4(),
       title: data.title,
       content: data.content,
-      createdAt: Date.now()
+      createdAt: Date.now(),
     };
     await dynamoDBService.createItem(database, process.env.NOTES_TABLE);
     return {
