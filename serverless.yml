@@ -83,12 +83,8 @@ functions:
       - http:
           path: /all/toDo
           method: get
-<<<<<<< HEAD
-          
-=======
 
 
->>>>>>> 0f3b6c6 (remove request from readAll todos)
 resources:
   Resources:
     NotesTable:
