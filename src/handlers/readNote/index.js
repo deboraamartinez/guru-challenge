@@ -5,7 +5,6 @@ exports.handler = async (event) => {
 
   try {
     const data = await dynamoDBService.readItem(id, process.env.NOTES_TABLE);
-    console.log(data)
     return {
       statusCode: 200,
       body: JSON.stringify({ message: data }),
