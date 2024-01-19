@@ -59,3 +59,13 @@ This is a serverless API for a To-do list, where you can create, read, update, d
 ## CI/CD
 
 ![CI/CD Pipeline](image.png)
+
+## Loom Video
+
+https://www.loom.com/share/bebaa54a9da340eab7cdd9dff078c1a9?sid=0df8259c-e5f7-400b-83cb-cb9f7ef6e9c1
+
+## Profile
+
+Linkedin: https://www.linkedin.com/in/debora-aspesi-martinez-8aa7361b9/
+Email: deboraaspesimartinez@gmail.com
+Phone: +55 51 999831959
