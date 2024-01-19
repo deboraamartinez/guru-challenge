@@ -83,11 +83,7 @@ functions:
       - http:
           path: /all/toDo
           method: get
-          request:
-            parameters:
-              paths:
-                id: true
-
+          
 resources:
   Resources:
     NotesTable:
