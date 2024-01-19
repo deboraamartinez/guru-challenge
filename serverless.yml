@@ -81,7 +81,7 @@ functions:
     handler: src/handlers/readAllNotes/index.handler
     events:
       - http:
-          path: /toDo/all
+          path: /all/toDo
           method: get
           request:
             parameters:
